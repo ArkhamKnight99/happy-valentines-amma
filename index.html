@@ -1,305 +1,648 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Happy Valentine’s Day Amma ❤️</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Valentine’s Day Amma ❤️</title>
 
-<style>
-:root{
-  --bg1:#fff0f5;
-  --bg2:#ffe6ea;
-  --card:rgba(255,255,255,.72);
-  --ink:#1f1f1f;
-  --accent:#d6336c;
-  --accent2:#b1124a;
-  --shadow: 0 22px 65px rgba(0,0,0,.18);
-}
+  <style>
+    :root{
+      --bg1:#fff0f6;
+      --bg2:#ffe6ee;
+      --card:rgba(255,255,255,.70);
+      --ink:#1f1f1f;
+      --accent:#d6336c;
+      --accent2:#b1124a;
+      --shadow: 0 22px 70px rgba(0,0,0,.18);
+      --glassBorder: rgba(255,255,255,.55);
+    }
 
-*{ box-sizing:border-box; }
-body{
-  margin:0;
-  font-family: Georgia, serif;
-  color:var(--ink);
-  background:
-    radial-gradient(1100px 600px at 18% 12%, var(--bg1), transparent 60%),
-    radial-gradient(1000px 560px at 82% 22%, var(--bg2), transparent 55%),
-    linear-gradient(to bottom, #fff7fb, #ffe9ef);
-  overflow-x:hidden;
-}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
 
-/* Floating hearts */
-.hearts{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:0;
-}
-.heart{
-  position:absolute;
-  bottom:-80px;
-  width:18px;
-  height:18px;
-  background:var(--accent);
-  transform:rotate(45deg);
-  opacity:.15;
-  animation: floatUp linear infinite;
-}
-.heart:before,
-.heart:after{
-  content:"";
-  position:absolute;
-  width:18px;
-  height:18px;
-  background:var(--accent);
-  border-radius:50%;
-}
-.heart:before{ left:-9px; }
-.heart:after{ top:-9px; }
+    body{
+      margin:0;
+      font-family: ui-serif, Georgia, "Times New Roman", serif;
+      color:var(--ink);
+      background:
+        radial-gradient(1100px 650px at 18% 12%, var(--bg1), transparent 60%),
+        radial-gradient(1000px 600px at 82% 20%, var(--bg2), transparent 55%),
+        linear-gradient(to bottom, #fff7fb, #ffe9ef);
+      overflow-x:hidden;
+    }
 
-@keyframes floatUp{
-  from { transform:translateY(0) rotate(45deg); }
-  to   { transform:translateY(-120vh) rotate(45deg); }
-}
+    /* ===== Floating hearts (subtle) ===== */
+    .hearts{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:0;
+    }
+    .heart{
+      position:absolute;
+      bottom:-90px;
+      width:16px; height:16px;
+      transform: rotate(45deg);
+      opacity:.12;
+      animation: floatUp linear infinite;
+      filter: blur(.2px);
+    }
+    .heart::before, .heart::after{
+      content:"";
+      position:absolute;
+      width:16px; height:16px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .heart{ background: var(--accent); }
+    .heart::before{ left:-8px; }
+    .heart::after{ top:-8px; }
 
-/* Intro */
-.intro{
-  position:fixed;
-  inset:0;
-  background:linear-gradient(180deg, rgba(0,0,0,.8), rgba(0,0,0,.5));
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:50;
-  transition:opacity .8s ease;
-}
-.intro.hide{ opacity:0; pointer-events:none; }
+    @keyframes floatUp{
+      0%   { transform: translateY(0) rotate(45deg); }
+      100% { transform: translateY(-120vh) rotate(45deg); }
+    }
 
-.intro-box{
-  text-align:center;
-  color:white;
-  padding:40px;
-  max-width:700px;
-}
+    /* ===== PRE-OPEN POPUP (Gate) ===== */
+    .gate{
+      position:fixed;
+      inset:0;
+      z-index:80;
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(900px 520px at 50% 35%, rgba(255,255,255,.18), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.86), rgba(0,0,0,.58));
+      backdrop-filter: blur(12px);
+      transition: opacity .9s ease, transform .9s ease;
+    }
+    .gate.hide{
+      opacity:0;
+      transform: scale(1.02);
+      pointer-events:none;
+    }
 
-.intro h2{
-  font-size:40px;
-  margin-bottom:10px;
-}
+    .gate-card{
+      width:min(920px, 92vw);
+      padding:26px 20px 18px;
+      border-radius:26px;
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow: 0 30px 90px rgba(0,0,0,.38);
+      color:#fff;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
 
-.intro button{
-  padding:12px 22px;
-  border:none;
-  border-radius:30px;
-  background:linear-gradient(135deg,#ff4d7d,#d6336c);
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
+    .gate-orbit{
+      position:absolute;
+      inset:-55%;
+      background: conic-gradient(from 150deg,
+        rgba(255,255,255,0),
+        rgba(255,255,255,.22),
+        rgba(255,255,255,0));
+      animation: spin 6.2s linear infinite;
+      opacity:.42;
+    }
+    @keyframes spin{ to{ transform: rotate(360deg);} }
 
-/* Main */
-.wrap{
-  position:relative;
-  z-index:1;
-  max-width:900px;
-  margin:auto;
-  padding:40px 20px 80px;
-}
+    .gate-content{ position:relative; z-index:2; }
 
-.hero{
-  text-align:center;
-  margin-bottom:20px;
-}
+    .gate-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      background: rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(10px);
+      font-size:13px;
+      opacity:.92;
+    }
 
-h1{
-  font-size:50px;
-  color:var(--accent);
-}
+    .gate-title{
+      font-size: clamp(24px, 4.2vw, 44px);
+      margin:12px 0 6px;
+      letter-spacing:.2px;
+    }
 
-.sub{
-  font-size:18px;
-  max-width:750px;
-  margin:auto;
-}
+    .gate-sub{
+      margin:0 auto 14px;
+      max-width:720px;
+      font-size: clamp(14px, 2.2vw, 18px);
+      line-height:1.65;
+      opacity:.92;
+    }
 
-.card{
-  background:var(--card);
-  border-radius:30px;
-  box-shadow:var(--shadow);
-  overflow:hidden;
-}
+    .typewrap{
+      margin: 10px auto 16px;
+      max-width: 740px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      padding: 14px 14px;
+      text-align:left;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 13.5px;
+      line-height: 1.55;
+      position:relative;
+      overflow:hidden;
+    }
 
-/* Instagram style carousel */
-.carousel{
-  position:relative;
-  height:520px;
-  overflow:hidden;
-}
+    .cursor{
+      display:inline-block;
+      width:10px;
+      height:18px;
+      margin-left:3px;
+      background:#fff;
+      vertical-align:middle;
+      animation: blink 1s step-end infinite;
+      opacity:.85;
+    }
+    @keyframes blink{ 50%{ opacity:0; } }
 
-.slide{
-  position:absolute;
-  inset:0;
-  opacity:0;
-  animation:crossfade 12s infinite;
-}
+    .gate-row{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
 
-.slide:nth-child(2){
-  animation-delay:6s;
-}
+    .btn{
+      border:0;
+      cursor:pointer;
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-weight:800;
+      font-size: 15px;
+      transition: transform .12s ease, filter .2s ease;
+      user-select:none;
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, #ff4d7d, #d6336c);
+      color:white;
+      box-shadow: 0 16px 42px rgba(214,51,108,.35);
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,.16);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.24);
+      backdrop-filter: blur(10px);
+    }
+    .btn:active{ transform: scale(.985); }
 
-.slide img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-}
+    .gate-hint{
+      margin-top:12px;
+      font-size:12.5px;
+      opacity:.78;
+    }
 
-.film{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.55), transparent);
-}
+    /* ===== Cinematic intro (letter) ===== */
+    .intro{
+      position:fixed;
+      inset:0;
+      z-index:60;
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(900px 520px at 50% 35%, rgba(255,255,255,.18), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.82), rgba(0,0,0,.55));
+      backdrop-filter: blur(10px);
+      transition: opacity .9s ease, transform .9s ease;
+    }
+    .intro.hide{
+      opacity:0;
+      transform: scale(1.02);
+      pointer-events:none;
+    }
 
-.caption{
-  position:absolute;
-  bottom:20px;
-  left:20px;
-  color:white;
-  font-size:18px;
-}
+    .intro-card{
+      width:min(920px, 92vw);
+      padding:30px 22px 22px;
+      border-radius:26px;
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow: 0 30px 90px rgba(0,0,0,.35);
+      text-align:center;
+      color:#fff;
+      position:relative;
+      overflow:hidden;
+    }
 
-@keyframes crossfade{
-  0%{opacity:0;}
-  10%{opacity:1;}
-  45%{opacity:1;}
-  55%{opacity:0;}
-  100%{opacity:0;}
-}
+    .intro-glow{
+      position:absolute;
+      inset:-45%;
+      background: conic-gradient(from 180deg, rgba(255,255,255,0), rgba(255,255,255,.20), rgba(255,255,255,0));
+      animation: spin 6.5s linear infinite;
+      opacity:.40;
+    }
 
-.message{
-  padding:30px;
-  font-size:20px;
-  line-height:1.8;
-}
+    .intro-content{ position:relative; z-index:2; }
+    .intro-title{
+      font-size: clamp(26px, 4vw, 46px);
+      margin:0 0 10px;
+      letter-spacing:.2px;
+    }
+    .intro-sub{
+      margin:0 auto 18px;
+      max-width:700px;
+      font-size: clamp(14px, 2.2vw, 18px);
+      line-height:1.65;
+      opacity:.92;
+    }
+    .intro-row{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .tiny{
+      margin-top:12px;
+      font-size:12.5px;
+      opacity:.75;
+    }
 
-.highlight{
-  color:var(--accent2);
-  font-weight:bold;
-}
+    /* ===== Layout ===== */
+    .wrap{
+      position:relative;
+      z-index:1;
+      max-width:980px;
+      margin:0 auto;
+      padding:30px 18px 90px;
+    }
 
-.sig{
-  text-align:right;
-  font-weight:bold;
-  margin-top:20px;
-}
+    .hero{
+      text-align:center;
+      padding:22px 10px 10px;
+      opacity:0;
+      transform: translateY(10px);
+      animation: riseIn 1.1s ease .2s forwards;
+    }
+    @keyframes riseIn{ to { opacity:1; transform: translateY(0); } }
 
-.btnrow{
-  text-align:center;
-  padding:20px;
-}
+    .badge{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 14px;
+      border-radius:999px;
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+      backdrop-filter: blur(10px);
+      font-size:14px;
+    }
 
-.btnrow button{
-  padding:10px 18px;
-  border:none;
-  border-radius:30px;
-  background:linear-gradient(135deg,#ff4d7d,#d6336c);
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
-</style>
+    h1{
+      margin:14px 0 10px;
+      font-size: clamp(34px, 4.8vw, 56px);
+      color: var(--accent);
+      letter-spacing:.2px;
+    }
+
+    .sub{
+      margin:0 auto;
+      max-width:780px;
+      font-size: clamp(16px, 2.2vw, 19px);
+      line-height:1.75;
+      opacity:.92;
+    }
+
+    .card{
+      margin:22px auto 0;
+      background: var(--card);
+      border: 1px solid var(--glassBorder);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      overflow:hidden;
+      opacity:0;
+      transform: translateY(16px) scale(.985);
+      animation: cardIn 1.0s ease .45s forwards;
+    }
+    @keyframes cardIn{
+      to{ opacity:1; transform: translateY(0) scale(1); }
+    }
+
+    /* ===== Carousel (NO CROP) + blurred backdrop ===== */
+    .carousel{
+      position:relative;
+      width:100%;
+      height: clamp(460px, 70vw, 640px);
+      overflow:hidden;
+      background: transparent;
+    }
+
+    .bg{
+      position:absolute;
+      inset:-30px;
+      background-size: cover;
+      background-position: center;
+      filter: blur(28px) saturate(1.15);
+      transform: scale(1.08);
+      opacity:.55;
+      transition: opacity .8s ease;
+    }
+
+    .vignette{
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(900px 540px at 50% 20%, rgba(255,255,255,.10), transparent 60%),
+        linear-gradient(to top, rgba(0,0,0,.55), transparent 62%);
+      pointer-events:none;
+    }
+
+    .slide{
+      position:absolute;
+      inset:0;
+      opacity:0;
+      transform: scale(1.02);
+      animation: crossfade 12s ease-in-out infinite;
+    }
+    .slide:nth-child(2){ animation-delay:6s; }
+
+    .slide img{
+      width:100%;
+      height:100%;
+      object-fit: contain; /* NO CROPPING */
+      object-position: center;
+      display:block;
+      filter: drop-shadow(0 18px 40px rgba(0,0,0,.25));
+    }
+
+    @keyframes crossfade{
+      0%   { opacity:0; transform: scale(1.02); }
+      10%  { opacity:1; transform: scale(1.00); }
+      45%  { opacity:1; transform: scale(1.00); }
+      55%  { opacity:0; transform: scale(1.01); }
+      100% { opacity:0; }
+    }
+
+    .caption{
+      position:absolute;
+      left:18px;
+      bottom:16px;
+      color:#fff;
+      font-size: 16px;
+      line-height:1.35;
+      text-shadow: 0 12px 26px rgba(0,0,0,.55);
+      opacity:.96;
+      max-width: 85%;
+    }
+
+    .card-inner{
+      padding:26px 22px 10px;
+    }
+
+    .message{
+      text-align:left;
+      font-size: clamp(16px, 2.2vw, 20px);
+      line-height:1.9;
+    }
+    .message p{ margin: 14px 0; }
+
+    .highlight{
+      color: var(--accent2);
+      font-weight:900;
+    }
+
+    .sig{
+      margin-top:18px;
+      text-align:right;
+      font-weight:900;
+      color: var(--accent2);
+      font-size: 20px;
+    }
+
+    .btnrow{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      padding: 18px 18px 26px;
+      flex-wrap:wrap;
+    }
+
+    .footer{
+      text-align:center;
+      margin-top:18px;
+      opacity:.7;
+      font-size:13px;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .slide, .heart, .intro-glow, .gate-orbit { animation: none !important; }
+      .hero, .card { animation: none !important; opacity:1; transform:none; }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="hearts" id="hearts" aria-hidden="true"></div>
 
-<div class="hearts" id="hearts"></div>
+  <!-- PRE-OPEN POPUP -->
+  <div class="gate" id="gate">
+    <div class="gate-card">
+      <div class="gate-orbit" aria-hidden="true"></div>
 
-<div class="intro" id="intro">
-  <div class="intro-box">
-    <h2>For Amma ❤️</h2>
-    <p>Tap below to open your Valentine’s letter.</p>
-    <button onclick="openLetter()">Open Letter ✨</button>
-  </div>
-</div>
+      <div class="gate-content">
+        <div class="gate-chip">🔒 Private message • Made with love</div>
+        <div class="gate-title">One moment…</div>
+        <div class="gate-sub">Before you open this, I want you to know this page exists for one reason:</div>
 
-<div class="wrap">
-  <div class="hero">
-    <h1>Happy Valentine’s Day Amma ❤️</h1>
-    <p class="sub">
-      This is a small reminder of something huge: how much I appreciate you —
-      and every sacrifice you’ve made for me.
-    </p>
-  </div>
+        <div class="typewrap">
+          <span id="typeText"></span><span class="cursor"></span>
+        </div>
 
-  <div class="card">
+        <div class="gate-row">
+          <button class="btn primary" id="unlockBtn">Unlock 💗</button>
+          <button class="btn ghost" id="burstGateBtn">Send hearts ✨</button>
+        </div>
 
-    <div class="carousel">
-      <div class="slide">
-        <img src="https://i.postimg.cc/SJ3gs5SL/Pic-1-jpg.avif" alt="Photo 1">
-        <div class="film"></div>
-        <div class="caption">The love you give is my biggest strength.</div>
-      </div>
-
-      <div class="slide">
-        <img src="https://i.postimg.cc/py0GNrgx/Pic-2-jpg.avif" alt="Photo 2">
-        <div class="film"></div>
-        <div class="caption">Thank you for everything, Amma. Always.</div>
+        <div class="gate-hint">Tip: Tap “Unlock” — then tap again to open the letter.</div>
       </div>
     </div>
-
-    <div class="message">
-      Amma, I want you to know I see it now.
-      I see the <span class="highlight">sacrifices</span> you made quietly,
-      the responsibilities you carried without complaining,
-      and the love behind everything you’ve done for me.
-      <br><br>
-      You gave me comfort even when you were tired.
-      You put my future ahead of your own.
-      And because of you, I’m able to stand strong today.
-      <br><br>
-      I love you more than words can explain.
-      <div class="sig">❤️ — Prudhvi</div>
-    </div>
-
-    <div class="btnrow">
-      <button onclick="burst()">Tap for a surprise ✨</button>
-    </div>
-
   </div>
-</div>
 
-<script>
-for(let i=0;i<20;i++){
-  let h=document.createElement("div");
-  h.className="heart";
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=(6+Math.random()*8)+"s";
-  document.getElementById("hearts").appendChild(h);
-}
+  <!-- Cinematic letter intro -->
+  <div class="intro hide" id="intro">
+    <div class="intro-card">
+      <div class="intro-glow" aria-hidden="true"></div>
+      <div class="intro-content">
+        <div class="intro-title">For Amma ❤️</div>
+        <div class="intro-sub">
+          Tap to open this Valentine’s letter.
+          I wanted you to feel how much I appreciate you — and every sacrifice you’ve made for me.
+        </div>
+        <div class="intro-row">
+          <button class="btn primary" id="openBtn">Open the letter ✨</button>
+          <button class="btn ghost" id="surpriseTop">Send hearts 💖</button>
+        </div>
+        <div class="tiny">Tip: Tap “Send hearts” for a little surprise.</div>
+      </div>
+    </div>
+  </div>
 
-function openLetter(){
-  document.getElementById("intro").classList.add("hide");
-}
+  <div class="wrap">
+    <div class="hero">
+      <div class="badge">💌 For Amma • with love</div>
+      <h1>Happy Valentine’s Day Amma ❤️</h1>
+      <p class="sub">
+        This is a small reminder of something huge: how much I appreciate you —
+        and every sacrifice you’ve made for me.
+      </p>
+    </div>
 
-function burst(){
-  for(let i=0;i<25;i++){
-    let el=document.createElement("div");
-    el.innerHTML=Math.random()>0.5?"❤️":"✨";
-    el.style.position="fixed";
-    el.style.left="50vw";
-    el.style.top="60vh";
-    el.style.fontSize=(15+Math.random()*20)+"px";
-    el.style.transition="all 1.2s ease";
-    document.body.appendChild(el);
-    setTimeout(()=>{
-      el.style.transform="translate("+(Math.random()*300-150)+"px,"+(-200-Math.random()*200)+"px)";
-      el.style.opacity="0";
-    },10);
-    setTimeout(()=>{el.remove();},1300);
-  }
-}
-</script>
+    <div class="card">
+      <div class="carousel" id="carousel">
+        <div class="bg" id="bgLayer"></div>
 
+        <div class="slide">
+          <img src="https://i.postimg.cc/SJ3gs5SL/Pic-1-jpg.avif" alt="Photo 1">
+          <div class="vignette"></div>
+          <div class="caption">The love you give is my biggest strength.</div>
+        </div>
+
+        <div class="slide">
+          <img src="https://i.postimg.cc/py0GNrgx/Pic-2-jpg.avif" alt="Photo 2">
+          <div class="vignette"></div>
+          <div class="caption">Thank you for everything, Amma. Always.</div>
+        </div>
+      </div>
+
+      <div class="card-inner">
+        <div class="message">
+          <p>
+            Amma, I want you to know I see it now.
+            I see the <span class="highlight">sacrifices</span> you made quietly,
+            the responsibilities you carried without complaining,
+            and the love behind everything you’ve done for me.
+          </p>
+
+          <p>
+            You gave me comfort even when you were tired.
+            You put my future ahead of your own.
+            And because of you, I’m able to stand strong today.
+          </p>
+
+          <p>
+            Thank you for believing in me, protecting me, and loving me unconditionally.
+            <span class="highlight">Everything I achieve carries a part of you in it.</span>
+          </p>
+
+          <p><strong>I love you more than words can explain.</strong></p>
+
+          <div class="sig">❤️ — Prudhvi</div>
+        </div>
+      </div>
+
+      <div class="btnrow">
+        <button class="btn primary" id="surpriseBtn">Tap for a surprise ✨</button>
+        <button class="btn ghost" id="replayBtn">Replay intro 🎬</button>
+      </div>
+    </div>
+
+    <div class="footer">Made with love • Valentine’s Day</div>
+  </div>
+
+  <script>
+    // ===== Floating hearts background =====
+    const hearts = document.getElementById('hearts');
+    const HEART_COUNT = 22;
+    for(let i=0;i<HEART_COUNT;i++){
+      const h = document.createElement('div');
+      h.className = 'heart';
+      const left = Math.random()*100;
+      const size = 10 + Math.random()*16;
+      const dur = 7 + Math.random()*10;
+      const delay = Math.random()*6;
+
+      h.style.left = left + 'vw';
+      h.style.width = size + 'px';
+      h.style.height = size + 'px';
+      h.style.animationDuration = dur + 's';
+      h.style.animationDelay = delay + 's';
+      h.style.opacity = 0.08 + Math.random()*0.18;
+      hearts.appendChild(h);
+    }
+
+    // ===== Confetti burst =====
+    function burst(){
+      const symbols = ["❤️","✨","💖","🌹","💗"];
+      for(let i=0;i<30;i++){
+        const s = document.createElement('div');
+        s.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+        s.style.position = 'fixed';
+        s.style.left = (50 + (Math.random()*44 - 22)) + 'vw';
+        s.style.top = (58 + (Math.random()*18 - 9)) + 'vh';
+        s.style.fontSize = (14 + Math.random()*22) + 'px';
+        s.style.zIndex = 9999;
+        s.style.transition = 'transform 1.25s ease, opacity 1.25s ease';
+        document.body.appendChild(s);
+
+        requestAnimationFrame(() => {
+          s.style.transform =
+            `translate(${(Math.random()*260-130)}px, ${(-240 - Math.random()*200)}px) rotate(${Math.random()*260-130}deg)`;
+          s.style.opacity = '0';
+        });
+        setTimeout(() => s.remove(), 1350);
+      }
+    }
+
+    // ===== Blurred background sync to slides =====
+    const bgLayer = document.getElementById('bgLayer');
+    const imgs = [
+      "https://i.postimg.cc/SJ3gs5SL/Pic-1-jpg.avif",
+      "https://i.postimg.cc/py0GNrgx/Pic-2-jpg.avif"
+    ];
+    let idx = 0;
+    function setBg(i){ bgLayer.style.backgroundImage = `url('${imgs[i]}')`; }
+    setBg(0);
+    setInterval(() => { idx=(idx+1)%imgs.length; setBg(idx); }, 6000);
+
+    // ===== Gate typing effect =====
+    const typeEl = document.getElementById("typeText");
+    const line = "You are loved. You are appreciated. And I’m grateful for everything you’ve done for me.";
+    let t = 0;
+
+    function type(){
+      if(t <= line.length){
+        typeEl.textContent = line.slice(0, t);
+        t++;
+        setTimeout(type, 22);
+      }
+    }
+    type();
+
+    // ===== Gate -> Intro -> Page =====
+    const gate = document.getElementById("gate");
+    const intro = document.getElementById("intro");
+    const unlockBtn = document.getElementById("unlockBtn");
+    const burstGateBtn = document.getElementById("burstGateBtn");
+
+    unlockBtn.addEventListener("click", () => {
+      gate.classList.add("hide");
+      intro.classList.remove("hide");
+    });
+
+    burstGateBtn.addEventListener("click", burst);
+
+    // Intro controls
+    document.getElementById("openBtn").addEventListener("click", () => {
+      intro.classList.add("hide");
+    });
+    document.getElementById("replayBtn").addEventListener("click", () => {
+      gate.classList.remove("hide");
+      intro.classList.add("hide");
+    });
+
+    // Surprise buttons
+    document.getElementById("surpriseBtn").addEventListener("click", burst);
+    document.getElementById("surpriseTop").addEventListener("click", burst);
+  </script>
 </body>
 </html>
